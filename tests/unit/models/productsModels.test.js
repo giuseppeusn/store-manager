@@ -3,15 +3,15 @@ const { expect } = require("chai");
 const productsModel = require("../../../models/productsModel");
 const connection = require("../../../models/connection");
 
-describe("Products Model tests", () => {
-  describe("Get a list of products - Model", () => {
+describe('Products Model tests', () => {
+  describe('Get a list of products', () => {
     before(() => {
       const execute = [
-        { id: 1, name: "example_name" },
-        { id: 2, name: "example_name2" },
+        { id: 1, name: 'example_name' },
+        { id: 2, name: 'example_name2' },
       ];
 
-      sinon.stub(connection, "execute").resolves(execute);
+      sinon.stub(connection, 'execute').resolves(execute);
     });
 
     after(() => {
@@ -21,22 +21,22 @@ describe("Products Model tests", () => {
     it('should return a list of products with "id" and "name"', async () => {
       const response = await productsModel.getAllProducts();
 
-      expect(response).to.be.a("object");
-      expect(response).to.have.a.property("id");
-      expect(response).to.have.a.property("name");
+      expect(response).to.be.a('object');
+      expect(response).to.have.a.property('id');
+      expect(response).to.have.a.property('name');
     });
   });
 
-  describe("Get products by ID - Model", async () => {
+  describe('Get product by ID', async () => {
     before(() => {
       const execute = [
         {
           id: 1,
-          name: "example_name",
+          name: 'example_name',
         },
       ];
 
-      sinon.stub(connection, "execute").resolves(execute);
+      sinon.stub(connection, 'execute').resolves(execute);
     });
 
     after(() => {
@@ -44,42 +44,15 @@ describe("Products Model tests", () => {
     });
 
     it('should return a product with "id" and "name"', async () => {
-      const response = await productsModel.getProduct("1");
-      console.log(response);
+      const response = await productsModel.getProduct('1');
 
-      expect(response).to.be.a("object");
-      expect(response).to.have.a.property("id");
-      expect(response).to.have.a.property("name");
+      expect(response).to.be.a('object');
+      expect(response).to.have.a.property('id');
+      expect(response).to.have.a.property('name');
     });
   });
 
-  describe("Get products by ID - Model", async () => {
-    before(() => {
-      const execute = [
-        {
-          id: 1,
-          name: "example_name",
-        },
-      ];
-
-      sinon.stub(connection, "execute").resolves(execute);
-    });
-
-    after(() => {
-      connection.execute.restore();
-    });
-
-    it('should return a product with "id" and "name"', async () => {
-      const response = await productsModel.getProduct("1");
-      console.log(response);
-
-      expect(response).to.be.a("object");
-      expect(response).to.have.a.property("id");
-      expect(response).to.have.a.property("name");
-    });
-  });
-
-  describe("Create product - Model", async () => {
+  describe('Create product', async () => {
     before(() => {
       const execute = [{ insertId: 1 }];
 

@@ -11,5 +11,4 @@ app.get('/', (_request, response) => {
 app.use(express.json());
 app.use('/products', productsRoute);
 
-
 module.exports = app;

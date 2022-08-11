@@ -79,4 +79,27 @@ describe('Products Services tests', () => {
       });
     });
   });
+
+  describe('Create product', () => {
+    describe('In case of success', () => {
+      before(() => {
+        const execute = [{ insertId: 1 }];
+
+        sinon.stub(productsModel, 'createProduct').resolves(execute);
+      });
+
+      after(() => {
+        productsModel.createProduct.restore();
+      });
+
+      it('should return a object with "code" and "response"', async () => {
+        const response = await productsService.createProduct('1');
+
+        expect(response).to.be.a('object');
+        
+        expect(response).to.have.a.property('code');
+        expect(response).to.have.a.property('response');
+      });
+    });
+  });
 });

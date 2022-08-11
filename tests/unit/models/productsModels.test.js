@@ -3,7 +3,7 @@ const { expect } = require("chai");
 const productsModel = require("../../../models/productsModel");
 const connection = require("../../../models/connection");
 
-describe('Products Model tests', () => {
+describe('Products Models tests', () => {
   describe('Get a list of products', () => {
     before(() => {
       const execute = [
@@ -65,7 +65,6 @@ describe('Products Model tests', () => {
 
     it('should return a product "id" inserted', async () => {
       const response = await productsModel.createProduct('name_example');
-      console.log(response);
 
       expect(response).to.be.a('object');
       expect(response).to.have.a.property('insertId');

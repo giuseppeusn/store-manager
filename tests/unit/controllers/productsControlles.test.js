@@ -101,4 +101,43 @@ describe('Products Controller tests', () => {
       });
     });
   });
+
+  describe('Create product', () => {
+    const response = {};
+    const request = {};
+
+    describe('In case of success', () => {
+      const result = {
+        code: 201,
+        response: {
+          id: '1',
+          name: 'example_name'
+        }
+      };
+
+      before(() => {
+        request.body = {
+          name: 'example_name',
+        };
+
+        response.status = sinon.stub()
+          .returns(response);
+        response.json = sinon.stub()
+          .returns();
+        
+        sinon.stub(productsService, 'createProduct').resolves(result);
+      });
+
+      after(() => {
+        productsService.createProduct.restore();
+      });
+
+      it('should response with status 201 and json with "id" and "name"', async () => {
+        await productsController.createProduct(request, response);
+
+        expect(response.status.calledWith(result.code)).to.be.equal(true);
+        expect(response.status.calledWith(result.response)).to.be.equal(true);
+      });
+    });
+  });
 });

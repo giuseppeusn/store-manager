@@ -67,7 +67,7 @@ describe('Products Controller tests', () => {
         await productsController.getProduct(request, response);
 
         expect(response.status.calledWith(result.code)).to.be.equal(true);
-        expect(response.status.calledWith(result.response)).to.be.equal(true);
+        expect(response.json.calledWith(result.response)).to.be.equal(true);
       });
     });
 
@@ -97,16 +97,16 @@ describe('Products Controller tests', () => {
         await productsController.getProduct(request, response);
 
         expect(response.status.calledWith(result.code)).to.be.equal(true);
-        expect(response.status.calledWith(result.response)).to.be.equal(true);
+        expect(response.json.calledWith(result.response)).to.be.equal(true);
       });
     });
   });
 
   describe('Create product', () => {
-    const response = {};
-    const request = {};
-
     describe('In case of success', () => {
+      const response = {};
+      const request = {};
+
       const result = {
         code: 201,
         response: {
@@ -136,7 +136,7 @@ describe('Products Controller tests', () => {
         await productsController.createProduct(request, response);
 
         expect(response.status.calledWith(result.code)).to.be.equal(true);
-        expect(response.status.calledWith(result.response)).to.be.equal(true);
+        expect(response.json.calledWith(result.response)).to.be.equal(true);
       });
     });
   });

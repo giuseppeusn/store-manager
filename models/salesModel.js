@@ -23,13 +23,7 @@ const getSale = async (id) => {
   return result;
 };
 
-const createSale = async (sales) => {
-  const querySalesProducts = `
-    INSERT INTO
-      StoreManager.sales_products (sale_id, product_id, quantity)
-    VALUES
-      (?, ?, ?)`;
-
+const createSale = async () => {
   const querySales = `
     INSERT INTO
       StoreManager.sales (id, date)
@@ -38,16 +32,29 @@ const createSale = async (sales) => {
 
   const [resultSale] = await connection.query(querySales);
 
-  await sales.forEach(async (sale) => {
-    const { productId, quantity } = sale;
-    await connection.query(querySalesProducts, [resultSale.insertId, productId, quantity]);
-  });
-
   return resultSale;
+};
+
+const createSaleProduct = async (id, sales) => {
+  const querySalesProducts = `
+    INSERT INTO
+      StoreManager.sales_products (sale_id, product_id, quantity)
+    VALUES
+      (?, ?, ?)`;
+  
+  sales.forEach(async (sale) => {
+    const { productId, quantity } = sale;
+    await connection.query(querySalesProducts, [
+      id,
+      productId,
+      quantity,
+    ]);
+  });
 };
 
 module.exports = {
   createSale,
   getAllSales,
   getSale,
+  createSaleProduct,
 };

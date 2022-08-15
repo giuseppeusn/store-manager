@@ -44,7 +44,8 @@ const createSale = async (sales) => {
     return { code: 404, message: 'Product not found' };
   }
 
-  const result = await salesModel.createSale(sales);
+  const result = await salesModel.createSale();
+  await salesModel.createSaleProduct(result.insertId, sales);
 
   const response = {
     id: result.insertId,

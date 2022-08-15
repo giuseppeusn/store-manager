@@ -30,7 +30,7 @@ const createSale = async () => {
     VALUES
       (default, default)`;
 
-  const [resultSale] = await connection.query(querySales);
+  const [resultSale] = await connection.execute(querySales);
 
   return resultSale;
 };
@@ -44,7 +44,7 @@ const createSaleProduct = async (id, sales) => {
   
   sales.forEach(async (sale) => {
     const { productId, quantity } = sale;
-    await connection.query(querySalesProducts, [
+    await connection.execute(querySalesProducts, [
       id,
       productId,
       quantity,

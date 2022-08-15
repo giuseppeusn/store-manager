@@ -24,8 +24,19 @@ const createProduct = async (name) => {
   return { code: 201, response };
 };
 
+const editProduct = async (id, name) => {
+  const { changedRows } = await productsModel.editProduct(id, name);
+
+  if (changedRows < 1) {
+    return { code: 404, message: 'Product not found' };
+  }
+
+  return { code: 200 };
+};
+
 module.exports = {
   getAllProducts,
   getProduct,
   createProduct,
+  editProduct,
 };

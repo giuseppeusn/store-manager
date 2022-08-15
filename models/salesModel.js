@@ -24,32 +24,29 @@ const getSale = async (id) => {
 };
 
 const createSale = async () => {
-  const querySales = `
+  const query = `
     INSERT INTO
       StoreManager.sales (id, date)
     VALUES
       (default, default)`;
 
-  const [resultSale] = await connection.execute(querySales);
+  const [result] = await connection.execute(query);
 
-  return resultSale;
+  return result;
 };
 
-const createSaleProduct = async (id, sales) => {
-  const querySalesProducts = `
+const createSaleProduct = async (id, sale) => {
+  const { productId, quantity } = sale;
+
+  const query = `
     INSERT INTO
       StoreManager.sales_products (sale_id, product_id, quantity)
     VALUES
       (?, ?, ?)`;
   
-  sales.forEach(async (sale) => {
-    const { productId, quantity } = sale;
-    await connection.execute(querySalesProducts, [
-      id,
-      productId,
-      quantity,
-    ]);
-  });
+  const [result] = await connection.execute(query, [id, productId, quantity]);
+
+  return result;
 };
 
 module.exports = {

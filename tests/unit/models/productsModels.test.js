@@ -108,4 +108,27 @@ describe('Products Models tests', () => {
       expect(response).to.have.a.property('affectedRows');
     });
   });
+
+  describe('Search product by query', async () => {
+    before(() => {
+      const execute = [{ 
+        id: '1',
+        name: 'example_name'
+      }];
+
+      sinon.stub(connection, 'execute').resolves(execute);
+    });
+
+    after(() => {
+      connection.execute.restore();
+    });
+
+    it('should return a object with "id" and "name', async () => {
+      const response = await productsModel.searchProduct('example');
+
+      expect(response).to.be.a('object');
+      expect(response).to.have.a.property('id');
+      expect(response).to.have.a.property('name');
+    });
+  });
 });

@@ -89,4 +89,23 @@ describe('Products Models tests', () => {
       expect(response).to.have.a.property('changedRows');
     });
   });
+
+  describe('Delete product', async () => {
+    before(() => {
+      const execute = [{ affectedRows: 1 }];
+
+      sinon.stub(connection, 'execute').resolves(execute);
+    });
+
+    after(() => {
+      connection.execute.restore();
+    });
+
+    it('should return a object with "affectedRows" greater than 1', async () => {
+      const response = await productsModel.deleteProduct('1');
+
+      expect(response).to.be.a('object');
+      expect(response).to.have.a.property('affectedRows');
+    });
+  });
 });

@@ -178,7 +178,7 @@ describe('Sales Services tests', () => {
   describe('Delete sale', () => {
     describe('In case of success', () => {
       before(() => {
-        const execute = [{ affectedRows: 1 }];
+        const execute = { affectedRows: 1 };
 
         sinon.stub(salesModel, 'deleteSale').resolves(execute);
       });
@@ -198,7 +198,7 @@ describe('Sales Services tests', () => {
     
     describe('In case of failing', () => {
       before(() => {
-        const execute = [{ affectedRows: 0 }];
+        const execute = { affectedRows: 0 };
 
         sinon.stub(salesModel, 'deleteSale').resolves(execute);
       });

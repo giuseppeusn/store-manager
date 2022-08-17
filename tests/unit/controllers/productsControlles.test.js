@@ -49,7 +49,7 @@ describe('Products Controller tests', () => {
 
       before(() => {
         request.body = {};
-        request.params = '1';
+        request.params = { id: '1' };
 
         response.status = sinon.stub()
           .returns(response);
@@ -97,7 +97,7 @@ describe('Products Controller tests', () => {
         await productsController.getProduct(request, response);
 
         expect(response.status.calledWith(result.code)).to.be.equal(true);
-        expect(response.json.calledWith(result.response)).to.be.equal(true);
+        expect(response.json.calledWith({ message: result.message })).to.be.equal(true);
       });
     });
   });
@@ -137,6 +137,72 @@ describe('Products Controller tests', () => {
 
         expect(response.status.calledWith(result.code)).to.be.equal(true);
         expect(response.json.calledWith(result.response)).to.be.equal(true);
+      });
+    });
+  });
+
+  describe('Update product', () => {
+    const response = {};
+    const request = {};
+
+    describe('In case of success', () => {
+      const result = { code: 200 };
+      const mock = {
+        id: '1',
+        name: 'example_name'
+      };
+
+      before(() => {
+        request.body = { name: 'example_name' };
+        request.params = { id: '1' };
+
+        response.status = sinon.stub()
+          .returns(response);
+        response.json = sinon.stub()
+          .returns();
+        
+        sinon.stub(productsService, 'editProduct').resolves(result);
+      });
+
+      after(() => {
+        productsService.editProduct.restore();
+      });
+
+      it('should response with status 200 and json with "id" and "name"', async () => {
+        await productsController.editProduct(request, response);
+
+        expect(response.status.calledWith(result.code)).to.be.equal(true);
+        expect(response.json.calledWith(mock)).to.be.equal(true);
+      });
+    });
+
+    describe('In case of failing', () => {
+      const result = {
+        code: 404,
+        message: 'Product not found'
+      };
+
+      before(() => {
+        request.body = { name: 'example_name' };
+        request.params = '99';
+
+        response.status = sinon.stub()
+          .returns(response);
+        response.json = sinon.stub()
+          .returns();
+        
+        sinon.stub(productsService, 'editProduct').resolves(result);
+      });
+
+      after(() => {
+        productsService.editProduct.restore();
+      });
+
+      it('should response with status 404 and message "Product not found"', async () => {
+        await productsController.editProduct(request, response);
+
+        expect(response.status.calledWith(result.code)).to.be.equal(true);
+        expect(response.json.calledWith({ message: result.message })).to.be.equal(true);
       });
     });
   });

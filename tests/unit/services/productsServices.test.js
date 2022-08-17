@@ -145,4 +145,47 @@ describe('Products Services tests', () => {
       });
     });
   });
+
+  describe('Delete product', () => {
+    describe('In case of success', () => {
+      before(() => {
+        const execute = { affectedRows: 1 };
+
+        sinon.stub(productsModel, 'deleteProduct').resolves(execute);
+      });
+
+      after(() => {
+        productsModel.deleteProduct.restore();
+      });
+
+      it('should return a object with "code"', async () => {
+        const response = await productsService.deleteProduct('1');
+
+        expect(response).to.be.a('object');
+        
+        expect(response).to.have.a.property('code');
+      });
+    });
+
+    describe('In case of failing', () => {
+      before(() => {
+        const execute = { affectedRows: 0 };
+
+        sinon.stub(productsModel, 'deleteProduct').resolves(execute);
+      });
+
+      after(() => {
+        productsModel.deleteProduct.restore();
+      });
+
+      it('should return a object with "code" and "message"', async () => {
+        const response = await productsService.deleteProduct('99');
+
+        expect(response).to.be.a('object');
+        
+        expect(response).to.have.a.property('code');
+        expect(response).to.have.a.property('message');
+      });
+    });
+  });
 });

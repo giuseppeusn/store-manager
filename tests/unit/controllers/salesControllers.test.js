@@ -111,7 +111,7 @@ describe('Sales Controller tests', () => {
         await salesController.getSale(request, response);
 
         expect(response.status.calledWith(result.code)).to.be.equal(true);
-        expect(response.json.calledWith(result.response)).to.be.equal(true);
+        expect(response.json.calledWith({ message: result.message })).to.be.equal(true);
       });
     });
   });
@@ -207,6 +207,69 @@ describe('Sales Controller tests', () => {
         await salesController.createSale(request, response);
 
         expect(response.status.calledWith(result.code)).to.be.equal(true);
+        expect(response.json.calledWith({ message: result.message })).to.be.equal(true);
+      });
+    });
+  });
+
+  describe('Delete sale', () => {
+    describe('In case of success', () => {
+      const response = {};
+      const request = {};
+
+      const result = { code: 204 };
+
+      before(() => {
+        request.body = {};
+        request.params = '1';
+
+        response.status = sinon.stub()
+          .returns(response);
+        response.end = sinon.stub().returns();
+        
+        sinon.stub(salesService, 'deleteSale').resolves(result);
+      });
+
+      after(() => {
+        salesService.deleteSale.restore();
+      });
+
+      it('should response with status 204', async () => {
+        await salesController.deleteSale(request, response);
+
+        expect(response.status.calledWith(result.code)).to.be.equal(true);
+      });
+    });
+
+    describe('In case of failing', () => {
+      const response = {};
+      const request = {};
+
+      const result = {
+        code: 404,
+        message: 'Sale not found'
+      };
+
+      before(() => {
+        request.body = {};
+        request.params = '1';
+
+        response.status = sinon.stub()
+          .returns(response);
+        response.json = sinon.stub()
+          .returns();
+        
+        sinon.stub(salesService, 'deleteSale').resolves(result);
+      });
+
+      after(() => {
+        salesService.deleteSale.restore();
+      });
+
+      it('should response with status 404 and message "Sale not found"', async () => {
+        await salesController.deleteSale(request, response);
+
+        expect(response.status.calledWith(404)).to.be.equal(true);
         expect(response.json.calledWith({ message: result.message })).to.be.equal(true);
       });
     });

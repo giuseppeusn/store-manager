@@ -174,4 +174,47 @@ describe('Sales Services tests', () => {
       });
     });
   });
+
+  describe('Delete sale', () => {
+    describe('In case of success', () => {
+      before(() => {
+        const execute = [{ affectedRows: 1 }];
+
+        sinon.stub(salesModel, 'deleteSale').resolves(execute);
+      });
+
+      after(() => {
+        salesModel.deleteSale.restore();
+      });
+
+      it('should return a object with "code"', async () => {
+        const response = await salesService.deleteSale('1');
+
+        expect(response).to.be.a('object');
+        
+        expect(response).to.have.a.property('code');
+      });
+    });
+    
+    describe('In case of failing', () => {
+      before(() => {
+        const execute = [{ affectedRows: 0 }];
+
+        sinon.stub(salesModel, 'deleteSale').resolves(execute);
+      });
+
+      after(() => {
+        salesModel.deleteSale.restore();
+      });
+
+      it('should return a object with "code" and "message"', async () => {
+        const response = await salesService.deleteSale('2');
+
+        expect(response).to.be.a('object');
+
+        expect(response).to.have.a.property('code');
+        expect(response).to.have.a.property('message');
+      });
+    });
+  });
 });

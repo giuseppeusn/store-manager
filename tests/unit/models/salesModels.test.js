@@ -118,4 +118,23 @@ describe('Sales Models tests', () => {
       expect(response).to.have.a.property('affectedRows')
     });
   });
+
+  describe('Delete sale', () => {
+    before(() => {
+      const execute = [{ affectedRows: 1 }];
+
+      sinon.stub(connection, 'execute').resolves(execute);
+    });
+
+    after(() => {
+      connection.execute.restore();
+    });
+
+    it('should return a object with "affectedRows" greater than 1', async () => {
+      const response = await salesModel.deleteSale();
+      
+      expect(response).to.be.a('object');
+      expect(response).to.have.a.property('affectedRows');
+    });
+  });
 });

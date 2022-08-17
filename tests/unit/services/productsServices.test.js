@@ -188,4 +188,27 @@ describe('Products Services tests', () => {
       });
     });
   });
+
+  describe('Search product by query', () => {
+    before(() => {
+      const execute = [
+        {
+          id: 1,
+          name: 'example_name',
+        },
+      ];
+
+      sinon.stub(productsModel, 'searchProduct').resolves(execute);
+    });
+
+    after(() => {
+      productsModel.searchProduct.restore();
+    });
+
+    it('should return an array', async () => {
+      const response = await productsService.searchProduct('name_example');
+
+      expect(response).to.be.an('array');
+    }); 
+  });
 });

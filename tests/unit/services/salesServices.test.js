@@ -208,7 +208,125 @@ describe('Sales Services tests', () => {
       });
 
       it('should return a object with "code" and "message"', async () => {
-        const response = await salesService.deleteSale('2');
+        const response = await salesService.deleteSale('99');
+
+        expect(response).to.be.a('object');
+
+        expect(response).to.have.a.property('code');
+        expect(response).to.have.a.property('message');
+      });
+    });
+  });
+
+  describe('Update sale', () => {
+    const saleMock = [
+      {
+        productId: 1,
+        quantity: 10,
+      },
+      {
+        productId: 2,
+        quantity: 50,
+      },
+    ];
+
+    describe('In case of success', () => {
+      before(() => {
+        const execute = [{ affectedRows: 1 }];
+        const executeProducts = ['1', '2'];
+        const executeGetSale = [
+          {
+            date: "2021-09-09T04:54:29.000Z",
+            productId: 1,
+            quantity: 2,
+          },
+          {
+            date: "2021-09-09T04:54:54.000Z",
+            productId: 2,
+            quantity: 2,
+          },
+        ];
+
+        sinon.stub(salesModel, 'updateSale').resolves(execute);
+        sinon.stub(salesModel, 'getSale').resolves(executeGetSale);
+        sinon.stub(productsModel, 'getAllProducts').resolves(executeProducts);
+      });
+
+      after(() => {
+        salesModel.updateSale.restore();
+        salesModel.getSale.restore();
+        productsModel.getAllProducts.restore();
+      });
+
+      it('should return a object with "code"', async () => {
+        const response = await salesService.updateSale('1', saleMock);
+
+        expect(response).to.be.a('object');
+        
+        expect(response).to.have.a.property('code');
+        expect(response).to.have.a.property('response');
+      });
+    });
+    
+    describe('In case of failing - nonexistent product', () => {
+      const saleMockFailing = [
+        {
+          productId: 99,
+          quantity: 10,
+        },
+        {
+          productId: 99,
+          quantity: 50,
+        },
+      ];
+
+      before(() => {
+        const executeProducts = ['1', '2', '3'];
+        const executeGetSale = [
+          {
+            date: "2021-09-09T04:54:29.000Z",
+            productId: 1,
+            quantity: 2,
+          },
+          {
+            date: "2021-09-09T04:54:54.000Z",
+            productId: 2,
+            quantity: 2,
+          },
+        ];
+
+        sinon.stub(salesModel, 'getSale').resolves(executeGetSale);
+        sinon.stub(productsModel, 'getAllProducts').resolves(executeProducts);
+      });
+
+      after(() => {
+        salesModel.getSale.restore();
+        productsModel.getAllProducts.restore();
+      });
+
+      it('should return a object with "code" and "message"', async () => {
+        const response = await salesService.updateSale('1', saleMockFailing);
+
+        expect(response).to.be.a('object');
+
+        expect(response).to.have.a.property('code');
+        expect(response).to.have.a.property('message');
+      });
+    });
+
+    describe('In case of failing - nonexistent sale', () => {
+      before(() => {
+        const executeGetSale = { code: 404, message: 'Product not found' };
+        
+        sinon.stub(salesModel, 'getSale').resolves(executeGetSale);
+      });
+
+      after(() => {
+        salesModel.getSale.restore();
+      });
+
+      it('should return a object with "code" and "message"', async () => {
+        const response = await salesService.updateSale('99', saleMock);
 
         expect(response).to.be.a('object');
 

@@ -102,4 +102,47 @@ describe('Products Services tests', () => {
       });
     });
   });
+
+  describe('Update product', () => {
+    describe('In case of success', () => {
+      before(() => {
+        const execute = { changedRows: 1};
+
+        sinon.stub(productsModel, 'editProduct').resolves(execute);
+      });
+
+      after(() => {
+        productsModel.editProduct.restore();
+      });
+
+      it('should return a object with "code"', async () => {
+        const response = await productsService.editProduct('1', 'name_example');
+
+        expect(response).to.be.a('object');
+        
+        expect(response).to.have.a.property('code');
+      });
+    });
+
+    describe('In case of failing', () => {
+      before(() => {
+        const execute = { changedRows: 0 };
+
+        sinon.stub(productsModel, 'editProduct').resolves(execute);
+      });
+
+      after(() => {
+        productsModel.editProduct.restore();
+      });
+
+      it('should return a object with "code" and "message"', async () => {
+        const response = await productsService.editProduct('99', 'name_example');
+
+        expect(response).to.be.a('object');
+        
+        expect(response).to.have.a.property('code');
+        expect(response).to.have.a.property('message');
+      });
+    });
+  });
 });

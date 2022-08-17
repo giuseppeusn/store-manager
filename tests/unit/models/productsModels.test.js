@@ -70,4 +70,23 @@ describe('Products Models tests', () => {
       expect(response).to.have.a.property('insertId');
     });
   });
+
+  describe('Update product', async () => {
+    before(() => {
+      const execute = [{ changedRows: 1 }];
+
+      sinon.stub(connection, 'execute').resolves(execute);
+    });
+
+    after(() => {
+      connection.execute.restore();
+    });
+
+    it('should return a object with "changedRows" greater than 1', async () => {
+      const response = await productsModel.editProduct('1','name_example');
+
+      expect(response).to.be.a('object');
+      expect(response).to.have.a.property('changedRows');
+    });
+  });
 });

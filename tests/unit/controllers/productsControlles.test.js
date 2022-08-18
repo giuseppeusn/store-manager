@@ -79,7 +79,7 @@ describe('Products Controller tests', () => {
 
       before(() => {
         request.body = {};
-        request.params = '1';
+        request.params = { id: '1' };
 
         response.status = sinon.stub()
           .returns(response);
@@ -184,7 +184,7 @@ describe('Products Controller tests', () => {
 
       before(() => {
         request.body = { name: 'example_name' };
-        request.params = '99';
+        request.params = { id: '99' };
 
         response.status = sinon.stub()
           .returns(response);
@@ -200,6 +200,65 @@ describe('Products Controller tests', () => {
 
       it('should response with status 404 and message "Product not found"', async () => {
         await productsController.editProduct(request, response);
+
+        expect(response.status.calledWith(result.code)).to.be.equal(true);
+        expect(response.json.calledWith({ message: result.message })).to.be.equal(true);
+      });
+    });
+  });
+
+  describe('Delete product', () => {
+    const response = {};
+    const request = {};
+
+    describe('In case of success', () => {
+      const result = { code: 204 };
+
+      before(() => {
+        request.params = { id: '1' };
+
+        response.status = sinon.stub()
+          .returns(response);
+        response.end = sinon.stub()
+          .returns();
+        
+        sinon.stub(productsService, 'deleteProduct').resolves(result);
+      });
+
+      after(() => {
+        productsService.deleteProduct.restore();
+      });
+
+      it('should response with status 204', async () => {
+        await productsController.deleteProduct(request, response);
+
+        expect(response.status.calledWith(result.code)).to.be.equal(true);
+      });
+    });
+
+    describe('In case of failing', () => {
+      const result = {
+        code: 404,
+        message: 'Product not found'
+      };
+
+      before(() => {
+        request.params = { id: '99' };
+
+        response.status = sinon.stub()
+          .returns(response);
+        response.json = sinon.stub()
+          .returns();
+        
+        sinon.stub(productsService, 'deleteProduct').resolves(result);
+      });
+
+      after(() => {
+        productsService.deleteProduct.restore();
+      });
+
+      it('should response with status 404 and message "Product not found"', async () => {
+        await productsController.deleteProduct(request, response);
 
         expect(response.status.calledWith(result.code)).to.be.equal(true);
         expect(response.json.calledWith({ message: result.message })).to.be.equal(true);

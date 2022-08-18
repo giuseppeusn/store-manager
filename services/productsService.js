@@ -24,8 +24,8 @@ const createProduct = async (name) => {
   return { code: 201, response };
 };
 
-const editProduct = async (id, name) => {
-  const { changedRows } = await productsModel.editProduct(id, name);
+const updateProduct = async (id, name) => {
+  const { changedRows } = await productsModel.updateProduct(id, name);
 
   if (changedRows < 1) {
     return { code: 404, message: 'Product not found' };
@@ -52,7 +52,7 @@ module.exports = {
   getAllProducts,
   getProduct,
   createProduct,
-  editProduct,
+  updateProduct,
   deleteProduct,
   searchProduct,
 };

@@ -29,7 +29,7 @@ const createProduct = async (name) => {
   return result;
 };
 
-const editProduct = async (id, name) => {
+const updateProduct = async (id, name) => {
   const query = `
     UPDATE StoreManager.products
     SET name = ?
@@ -68,7 +68,7 @@ module.exports = {
   getAllProducts,
   getProduct,
   createProduct,
-  editProduct,
+  updateProduct,
   deleteProduct,
   searchProduct,
 };

@@ -266,7 +266,7 @@ describe('Products Controller tests', () => {
     });
   });
 
-  describe('Search product by id', () => {
+  describe('Search product by query', () => {
     const response = {};
     const request = {};
 

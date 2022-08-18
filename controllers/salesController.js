@@ -3,7 +3,7 @@ const salesService = require('../services/salesService');
 const getAllSales = async (_req, res) => {
   const sales = await salesService.getAllSales();
 
-  res.status(200).json(sales);
+  return res.status(200).json(sales);
 };
 
 const getSale = async (req, res) => {
@@ -12,10 +12,10 @@ const getSale = async (req, res) => {
   const { message, code, response } = await salesService.getSale(id);
 
   if (message) {
-    res.status(code).json({ message });
+    return res.status(code).json({ message });
   }
 
-  res.status(code).json(response);
+  return res.status(code).json(response);
 };
 
 const createSale = async (req, res) => {
@@ -35,7 +35,9 @@ const deleteSale = async (req, res) => {
 
   const { code, message } = await salesService.deleteSale(id);
 
-  if (message) return res.status(code).json({ message });
+  if (message) {
+    return res.status(code).json({ message });
+  }
 
   return res.status(code).end();
 };
@@ -46,7 +48,9 @@ const updateSale = async (req, res) => {
 
   const { code, message, response } = await salesService.updateSale(id, sales);
 
-  if (message) return res.status(code).json({ message });
+  if (message) {
+    return res.status(code).json({ message });
+  }
 
   return res.status(code).json(response);
 };

@@ -18,14 +18,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tryber/sd-02-project-store-manager.git"
+    "url": "git+https://github.com/giuseppeusn/store-manager"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tryber/sd-02-project-store-manager/issues"
+    "url": "https://github.com/giuseppeusn/store-manager/issues"
   },
-  "homepage": "https://github.com/tryber/sd-02-project-store-manager#readme",
+  "homepage": "https://github.com/giuseppeusn/store-manager#readme",
   "dependencies": {
     "@hapi/boom": "^9.1.0",
     "body-parser": "^1.19.0",

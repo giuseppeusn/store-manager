@@ -2,7 +2,7 @@
 
 ## Project
 
-Backend project for managing a store's inventory. In this project it was possible to put into practice lessons learned with the MSC architecture _(Model, Service and Controller)_, Node JS for code execution, Express JS for the creation of the API that communicates with the database, MySQL to store the data in the database, Mocha/Chai for test development and Sinon JS to stub the functions of the MSC layers
+Backend project for managing a store's inventory with a simple CRUD _(Create, Read, Update, Delete)_. In this project it was possible to put into practice lessons learned with the MSC architecture _(Model, Service and Controller)_, Node JS for code execution, Express JS for the creation of the API that communicates with the database, MySQL to store the data in the database, Mocha/Chai for test development and Sinon JS to stub the functions of the MSC layers
 
 ## Developed using
 > JavaScript, Node JS, MySQL, Express JS, MSC Architecture, Mocha, Chai, Sinon
@@ -33,7 +33,7 @@ Backend project for managing a store's inventory. In this project it was possibl
   > Endpoint: /products
   > ```
   > ```json
-  > Body:
+  > Body example:
   > {
   >   "name": "example"
   > }
@@ -46,7 +46,7 @@ Backend project for managing a store's inventory. In this project it was possibl
   > Endpoint: /products/:id
   > ```
   > ```json
-  > Body:
+  > Body example:
   > {
   >   "name": "new_name_example"
   > }
@@ -91,7 +91,7 @@ Backend project for managing a store's inventory. In this project it was possibl
   > Endpoint: /sales
   > ```
   > ```json
-  > Body:
+  > Body example:
   > [
   >   {
   >     "productId": 1,
@@ -111,7 +111,7 @@ Backend project for managing a store's inventory. In this project it was possibl
   > Endpoint: /sales/:id
   > ```
   > ```json
-  > Body:
+  > Body example:
   >  [
   >   {
   >     "productId": 1,
@@ -140,7 +140,7 @@ Backend project for managing a store's inventory. In this project it was possibl
 > 5 - Run the command `docker exec -it store_manager bash` <br>
 > 6 - Run the command `npm install` inside docker to install <br>
 > 7 - Run the command `npm run migration` inside docker to create database <br>
-> 8 - Run the command `npm run seed` inside docker to populate database <br>
+> 8 - Run the command `npm run seed` inside docker to populate database (if you need to repopulate, use this command again) <br>
 > 9 - Run the command `npm run debug` inside docker to run application
 
 ## Checking tests

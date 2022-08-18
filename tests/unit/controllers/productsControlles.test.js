@@ -269,12 +269,11 @@ describe('Products Controller tests', () => {
   describe('Search product by id', () => {
     const response = {};
     const request = {};
-    const result = { code: 200 };
 
-    const responseMock = {
+    const result = [{
       id: '1',
       name: 'example_name'
-    }
+    }];
 
     before(() => {
       request.query = { q: 'example' };
@@ -294,8 +293,8 @@ describe('Products Controller tests', () => {
     it('should response with status 200 and json with "id" and "name"', async () => {
       await productsController.searchProduct(request, response);
 
-      expect(response.status.calledWith(result.code)).to.be.equal(true);
-      expect(response.json.calledWith(responseMock)).to.be.equal(true);
+      expect(response.status.calledWith(200)).to.be.equal(true);
+      expect(response.json.calledWith(result)).to.be.equal(true);
     });
   });
 });

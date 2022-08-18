@@ -140,7 +140,7 @@ Backend project for managing a store's inventory with a simple CRUD _(Create, Re
 > 5 - Run the command `docker exec -it store_manager bash` <br>
 > 6 - Run the command `npm install` inside docker to install <br>
 > 7 - Run the command `npm run migration` inside docker to create database <br>
-> 8 - Run the command `npm run seed` inside docker to populate database <br>
+> 8 - Run the command `npm run seed` inside docker to populate database (if you need to repopulate, use this command again) <br>
 > 9 - Run the command `npm run debug` inside docker to run application
 
 ## Checking tests

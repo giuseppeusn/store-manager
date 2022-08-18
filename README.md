@@ -33,7 +33,7 @@ Backend project for managing a store's inventory with a simple CRUD _(Create, Re
   > Endpoint: /products
   > ```
   > ```json
-  > Body:
+  > Body example:
   > {
   >   "name": "example"
   > }
@@ -46,7 +46,7 @@ Backend project for managing a store's inventory with a simple CRUD _(Create, Re
   > Endpoint: /products/:id
   > ```
   > ```json
-  > Body:
+  > Body example:
   > {
   >   "name": "new_name_example"
   > }
@@ -91,7 +91,7 @@ Backend project for managing a store's inventory with a simple CRUD _(Create, Re
   > Endpoint: /sales
   > ```
   > ```json
-  > Body:
+  > Body example:
   > [
   >   {
   >     "productId": 1,
@@ -111,7 +111,7 @@ Backend project for managing a store's inventory with a simple CRUD _(Create, Re
   > Endpoint: /sales/:id
   > ```
   > ```json
-  > Body:
+  > Body example:
   >  [
   >   {
   >     "productId": 1,

@@ -265,4 +265,37 @@ describe('Products Controller tests', () => {
       });
     });
   });
+
+  describe('Search product by id', () => {
+    const response = {};
+    const request = {};
+    const result = { code: 200 };
+
+    const responseMock = {
+      id: '1',
+      name: 'example_name'
+    }
+
+    before(() => {
+      request.query = { q: 'example' };
+
+      response.status = sinon.stub()
+        .returns(response);
+      response.json = sinon.stub()
+        .returns();
+      
+      sinon.stub(productsService, 'searchProduct').resolves(result);
+    });
+
+    after(() => {
+      productsService.searchProduct.restore();
+    });
+
+    it('should response with status 200 and json with "id" and "name"', async () => {
+      await productsController.searchProduct(request, response);
+
+      expect(response.status.calledWith(result.code)).to.be.equal(true);
+      expect(response.json.calledWith(responseMock)).to.be.equal(true);
+    });
+  });
 });

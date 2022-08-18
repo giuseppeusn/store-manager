@@ -2,7 +2,7 @@
 
 ## Project
 
-Backend project for managing a store's inventory. In this project it was possible to put into practice lessons learned with the MSC architecture _(Model, Service and Controller)_, Node JS for code execution, Express JS for the creation of the API that communicates with the database, MySQL to store the data in the database, Mocha/Chai for test development and Sinon JS to stub the functions of the MSC layers
+Backend project for managing a store's inventory with a simple CRUD _(Create, Read, Update, Delete)_. In this project it was possible to put into practice lessons learned with the MSC architecture _(Model, Service and Controller)_, Node JS for code execution, Express JS for the creation of the API that communicates with the database, MySQL to store the data in the database, Mocha/Chai for test development and Sinon JS to stub the functions of the MSC layers
 
 ## Developed using
 > JavaScript, Node JS, MySQL, Express JS, MSC Architecture, Mocha, Chai, Sinon

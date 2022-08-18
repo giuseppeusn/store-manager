@@ -2,7 +2,7 @@
 
 ## Project
 
-Projeto backend para gerenciamento do estoque de uma loja. Neste projeto foi possível colocar em prática aprendizados com a arquitetura MSC _(Model, Service e Controller)_, Node JS para execução do código, Express JS para a criação da API que comunica com o banco de dados, MySQL para armazenar os dados no banco, Mocha/Chai para desenvolvimento dos testes e Sinon JS para fazer o dublê das funções das camadas MSC
+Backend project for managing a store's inventory. In this project it was possible to put into practice lessons learned with the MSC architecture _(Model, Service and Controller)_, Node JS for code execution, Express JS for the creation of the API that communicates with the database, MySQL to store the data in the database, Mocha/Chai for test development and Sinon JS to stub the functions of the MSC layers
 
 ## Developed using
 > JavaScript, Node JS, MySQL, Express JS, MSC Architecture, Mocha, Chai, Sinon

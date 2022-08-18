@@ -1,9 +1,10 @@
 const salesService = require('../services/salesService');
+const { StatusCodes } = require('../utils/httpStatusCodes');
 
 const getAllSales = async (_req, res) => {
   const sales = await salesService.getAllSales();
 
-  return res.status(200).json(sales);
+  return res.status(StatusCodes.OK).json(sales);
 };
 
 const getSale = async (req, res) => {

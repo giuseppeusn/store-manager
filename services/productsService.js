@@ -1,4 +1,5 @@
 const productsModel = require('../models/productsModel');
+const { StatusCodes, ReasonPhrases } = require('../utils/httpStatusCodes');
 
 const getAllProducts = async () => {
   const result = await productsModel.getAllProducts();
@@ -10,10 +11,10 @@ const getProduct = async (id) => {
   const result = await productsModel.getProduct(id);
 
   if (!result.length) {
-    return { code: 404, message: 'Product not found' };
+    return { code: StatusCodes.NOT_FOUND, message: ReasonPhrases.PRODUCT_NOT_FOUND };
   }
 
-  return { code: 200, response: result[0] };
+  return { code: StatusCodes.OK, response: result[0] };
 };
 
 const createProduct = async (name) => {
@@ -21,32 +22,30 @@ const createProduct = async (name) => {
 
   const response = { id: insertId, name };
 
-  return { code: 201, response };
+  return { code: StatusCodes.CREATED, response };
 };
 
 const updateProduct = async (id, name) => {
   const { changedRows } = await productsModel.updateProduct(id, name);
 
   if (changedRows < 1) {
-    return { code: 404, message: 'Product not found' };
+    return { code: StatusCodes.NOT_FOUND, message: ReasonPhrases.PRODUCT_NOT_FOUND };
   }
 
-  return { code: 200 };
+  return { code: StatusCodes.OK };
 };
 
 const deleteProduct = async (id) => {
   const { affectedRows } = await productsModel.deleteProduct(id);
 
-  if (affectedRows < 1) return { code: 404, message: 'Product not found' };
+  if (affectedRows < 1) {
+    return { code: StatusCodes.NOT_FOUND, message: ReasonPhrases.PRODUCT_NOT_FOUND };
+  }
 
-  return { code: 204 };
+  return { code: StatusCodes.NO_CONTENT };
 };
 
-const searchProduct = async (query) => {
-  const result = await productsModel.searchProduct(query);
-
-  return result;
-};
+const searchProduct = async (query) => productsModel.searchProduct(query);
 
 module.exports = {
   getAllProducts,

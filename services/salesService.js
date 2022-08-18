@@ -1,5 +1,6 @@
 const salesModel = require('../models/salesModel');
 const productsModel = require('../models/productsModel');
+const { StatusCodes, ReasonPhrases } = require('../utils/httpStatusCodes');
 
 const serialize = (response) => {
   let result = [];
@@ -27,13 +28,13 @@ const getSale = async (id) => {
   const result = await salesModel.getSale(id);
 
   if (!result.length) {
-    return { code: 404, message: 'Sale not found' };
+    return { code: StatusCodes.NOT_FOUND, message: ReasonPhrases.SALE_NOT_FOUND };
   }
 
   const serialized = serialize(result)
     .map(({ date, productId, quantity }) => ({ date, productId, quantity }));
 
-  return { code: 200, response: serialized };
+  return { code: StatusCodes.OK, response: serialized };
 };
 
 const createSale = async (sales) => {
@@ -41,7 +42,7 @@ const createSale = async (sales) => {
   const existProd = sales.filter((sale) => sale.productId > responseProd.length);
 
   if (existProd.length > 0) {
-    return { code: 404, message: 'Product not found' };
+    return { code: StatusCodes.NOT_FOUND, message: ReasonPhrases.PRODUCT_NOT_FOUND };
   }
 
   const result = await salesModel.createSale();
@@ -53,27 +54,31 @@ const createSale = async (sales) => {
     itemsSold: sales,
   };
 
-  return { code: 201, response };
+  return { code: StatusCodes.CREATED, response };
 };
 
 const deleteSale = async (id) => {
   const { affectedRows } = await salesModel.deleteSale(id);
 
-  if (affectedRows < 1) return { code: 404, message: 'Sale not found' };
+  if (affectedRows < 1) {
+    return { code: StatusCodes.NOT_FOUND, message: ReasonPhrases.SALE_NOT_FOUND };
+  }
 
-  return { code: 204 };
+  return { code: StatusCodes.NO_CONTENT };
 };
 
 const updateSale = async (id, sales) => {
   const existSale = await getSale(id);
 
-  if (existSale.message) return existSale;
+  if (existSale.message) {
+    return existSale;
+  }
 
   const responseProd = await productsModel.getAllProducts();
   const existProd = sales.filter((sale) => sale.productId > responseProd.length);
 
   if (existProd.length > 0) {
-    return { code: 404, message: 'Product not found' };
+    return { code: StatusCodes.NOT_FOUND, message: ReasonPhrases.PRODUCT_NOT_FOUND };
   }
 
   await Promise.all(sales.map((sale) => salesModel.updateSale(sale.productId, sale.quantity, id)));
@@ -83,7 +88,7 @@ const updateSale = async (id, sales) => {
     itemsUpdated: sales,
   };
 
-  return { code: 200, response };
+  return { code: StatusCodes.OK, response };
 };
 
 module.exports = {

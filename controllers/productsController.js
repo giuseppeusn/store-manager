@@ -1,9 +1,10 @@
 const productService = require('../services/productsService');
+const { StatusCodes } = require('../utils/httpStatusCodes');
 
 const getAllProducts = async (_req, res) => {
   const products = await productService.getAllProducts();
 
-  return res.status(200).json(products);
+  return res.status(StatusCodes.OK).json(products);
 };
 
 const getProduct = async (req, res) => {
@@ -56,7 +57,7 @@ const searchProduct = async (req, res) => {
 
   const response = await productService.searchProduct(q);
 
-  return res.status(200).json(response);
+  return res.status(StatusCodes.OK).json(response);
 };
 
 module.exports = {

@@ -138,8 +138,10 @@ Backend project for managing a store's inventory. In this project it was possibl
 > 3 - Start docker <br>
 > 4 - Run the command `docker compose up -d` <br>
 > 5 - Run the command `docker exec -it store_manager bash` <br>
-> 6 - Run the command `npm install` inside docker <br>
-> 7 - Run the command `npm run debug` inside docker
+> 6 - Run the command `npm install` inside docker to install <br>
+> 7 - Run the command `npm run migration` inside docker to create database <br>
+> 8 - Run the command `npm run seed` inside docker to populate database <br>
+> 9 - Run the command `npm run debug` inside docker to run application
 
 ## Checking tests
 > 1 - Do the previous steps up to 6 <br>
